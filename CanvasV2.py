@@ -276,30 +276,6 @@ class Constraint(SketchObject):
         return retstring
 
 
-# class ParallelToAxisConstraint(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "ParallelToAxisConstraint"
-
-
-# class RefDifference(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "RefDifference"
-
-
-# class PointPlaneCoincident(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "coincident"
-
-
-# class PointLineDistance(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "distance"
-
-
 class Distance(Constraint):
     def __init__(self, *args):
         self.constraintName = "distance"
@@ -330,12 +306,6 @@ class Distance(Constraint):
         return retstring
 
 
-# class SymmetryConstraint(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "SymmetryConstraint"
-
-
 class Collinear(Constraint):
     def __init__(self, *args):
         Constraint.__init__(self, *args)
@@ -346,18 +316,6 @@ class Concentric(Constraint):
     def __init__(self, *args):
         Constraint.__init__(self, *args)
         self.constraintName = "concentric"
-
-
-# class FractionConstraint(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "FractionConstraint"
-
-
-# class RefMultiplication(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "RefMultiplication"
 
 
 class Perpendicular(Constraint):
@@ -401,12 +359,6 @@ class Parallel(Constraint):
         self.constraintName = "parallel"
 
 
-# class EqualRadius(Constraint):
-#     def __init__(self, *args):
-#         Constraint.__init__(self, *args)
-#         self.constraintName = "EqualRadius"
-
-
 class Equal(Constraint):
     def __init__(self, *args):
         Constraint.__init__(self, *args)
@@ -414,18 +366,6 @@ class Equal(Constraint):
 
 
 class Tangent(Constraint):
-    def __init__(self, *args):
-        Constraint.__init__(self, *args)
-        self.constraintName = "tangent"
-
-
-class CircleTangentCircle(Constraint):
-    def __init__(self, *args):
-        Constraint.__init__(self, *args)
-        self.constraintName = "tangent"
-
-
-class LineTangentCircle(Constraint):
     def __init__(self, *args):
         Constraint.__init__(self, *args)
         self.constraintName = "tangent"

@@ -4,27 +4,7 @@ import math
 
 
 class Ngon(DesignObject):
-    def swapGlobalsIn(self):
-        DesignObject.swapGlobalsIn(self)
-        # global Globals.origin
-        self.swapOrigin = Globals.origin
-        Globals.origin = self.origin
-
-    def swapGlobalsOut(self):
-        DesignObject.swapGlobalsOut(self)
-        Globals.origin = self.swapOrigin
-
-    def execute(self):
-        self.swapGlobalsIn()
-        self.customExecute()        
-        self.swapGlobalsOut()
-
     def customExecute(self):
-        # global Globals.currentObject
-        # global Globals.origin
-
-        # print(globals()['origin'].coordinates())
-
         n = getParam("n",4)
         r = getParam("r",100)
 
