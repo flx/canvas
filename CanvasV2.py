@@ -1,16 +1,13 @@
 # Author: flx
 from enum import Enum
-
-currentObject = None
-origin = None
+import Globals
 
 def getParam(name, default):
-    global currentObject
-    if currentObject == None:
+    if Globals.currentObject == None:
         return default
     else:
         try: 
-            a = getattr(currentObject,name)
+            a = getattr(Globals.currentObject,name)
             return a
         except:
             return default
@@ -60,7 +57,6 @@ newObjectName = newNameFu("O")
 
 class DesignObject:
     def __init__(self, **kwargs):
-        global currentObject
         if 'addtosequence' in kwargs:
             if kwargs['addtosequence'] == True:
                 R.appendToSequence(self)
@@ -80,9 +76,9 @@ class DesignObject:
         if 'parent' in kwargs:
             pass
         else:
-            if currentObject != None:
-                self.parent = currentObject
-                assert isinstance(currentObject, DesignObject), 'current Object parameter must be DesignObject'
+            if Globals.currentObject != None:
+                self.parent = Globals.currentObject
+                assert isinstance(Globals.currentObject, DesignObject), 'current Object parameter must be DesignObject'
                 self.parent.insertObject(self)
         if 'name' in kwargs:
             pass
@@ -97,19 +93,25 @@ class DesignObject:
         if 'origin' in kwargs:
             pass
         else:
-            self.origin = origin
+            self.origin = Globals.origin
         self.swapGlobalsIn()
         self.execute()
         self.swapGlobalsOut()
 
     def swapGlobalsIn(self):
-        global currentObject
-        self.swapCurrentObject = currentObject
-        currentObject = self
+        self.swapCurrentObject = Globals.currentObject
+        Globals.currentObject = self
+        self.swapOrigin = Globals.origin
+        Globals.origin = self.origin
 
     def swapGlobalsOut(self):
-        global currentObject
-        currentObject = self.swapCurrentObject
+        Globals.currentObject = self.swapCurrentObject
+        Globals.origin = self.swapOrigin
+
+    def execute(self):
+        self.swapGlobalsIn()
+        self.customExecute()
+        self.swapGlobalsOut()
 
     def execute(self):
         pass
@@ -138,7 +140,7 @@ class Id(DesignObject):
 
 
 class Sketch(DesignObject):
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         self.nameSuffix = newSketchName()
         self.points = []
         self.lines = []
@@ -151,7 +153,7 @@ class Sketch(DesignObject):
             else:
                 assert False, "Sketch needs to be created with a point and a line"
         R.currentSketch = self
-        DesignObject.__init__(self)
+        DesignObject.__init__(self, **kwargs)
 
     def output(self):
         ostring = f"{self.nameSuffix} = sketch " + " ".join(map(lambda x: x.name, self.points)) + " ".join(
@@ -183,8 +185,10 @@ class Point(SketchObject):
                 kwargs["name"] = newPointName()
         SketchObject.__init__(self, **kwargs)
         self.sketch = R.getCurrentSktech()
-        self.x = x
-        self.y = y
+        print(Globals.origin)
+        print(Globals.origin.x, Globals.origin.y)
+        self.x = x + Globals.origin.x
+        self.y = y + Globals.origin.y
 
     def output(self):
         return f"{self.name()} = point {self.x} {self.y}"
@@ -508,4 +512,7 @@ class Revolution(DesignObject):
             map(lambda x: x.name, self.elements))
 
 
-origin = Point(0, 0, name=f'origin', addtosequence=False)
+Globals.yzSketch = Sketch(name = 'yzSketch', addtosequence=False)
+Globals.xzSketch = Sketch(name = 'xzSketch', addtosequence=False)
+Globals.xySketch = Sketch(name = 'xySketch', addtosequence=False)
+Globals.origin = Point(0, 0, name= 'origin', addtosequence=False)
