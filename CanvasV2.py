@@ -94,9 +94,7 @@ class DesignObject:
             pass
         else:
             self.origin = Globals.origin
-        self.swapGlobalsIn()
         self.execute()
-        self.swapGlobalsOut()
 
     def swapGlobalsIn(self):
         self.swapCurrentObject = Globals.currentObject
@@ -113,9 +111,9 @@ class DesignObject:
         self.customExecute()
         self.swapGlobalsOut()
 
-    def execute(self):
+    def customExecute(self):
         pass
-    
+
     def output(self):
         return f"# DesignObject {self.name()}"
 
@@ -185,8 +183,6 @@ class Point(SketchObject):
                 kwargs["name"] = newPointName()
         SketchObject.__init__(self, **kwargs)
         self.sketch = R.getCurrentSktech()
-        print(Globals.origin)
-        print(Globals.origin.x, Globals.origin.y)
         self.x = x + Globals.origin.x
         self.y = y + Globals.origin.y
 
@@ -435,7 +431,7 @@ class LineTangentCircle(Constraint):
         self.constraintName = "tangent"
 
 
-class PointLineCoincident(Constraint):
+class Coincident(Constraint):
     def __init__(self, *args):
         Constraint.__init__(self, *args)
         self.constraintName = "coincident"
@@ -512,7 +508,7 @@ class Revolution(DesignObject):
             map(lambda x: x.name, self.elements))
 
 
-Globals.yzSketch = Sketch(name = 'yzSketch', addtosequence=False)
-Globals.xzSketch = Sketch(name = 'xzSketch', addtosequence=False)
-Globals.xySketch = Sketch(name = 'xySketch', addtosequence=False)
-Globals.origin = Point(0, 0, name= 'origin', addtosequence=False)
+Globals.yzSketch = Sketch(name = 'Globals.yzSketch', addtosequence=False)
+Globals.xzSketch = Sketch(name = 'Globals.xzSketch', addtosequence=False)
+Globals.xySketch = Sketch(name = 'Globals.xySketch', addtosequence=False)
+Globals.origin = Point(0, 0, name= 'Globals.origin', addtosequence=False)

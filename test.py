@@ -3,11 +3,7 @@ from CanvasV2 import *
 import math
 
 class Test(DesignObject):
-
 	def customExecute(self):
-		print("customexecute")
-		print(Globals.origin)
-		print(Globals.origin.coordinates())
 		P2 = Point(-169.500, -21.500)
 		P3 = Point(8.000, 231.500)
 		L1 = Line(P2, P3)

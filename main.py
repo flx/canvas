@@ -1,3 +1,5 @@
+
+import Globals 
 from CanvasV2 import *
 import math
 import test
@@ -25,8 +27,6 @@ a = test.Test(origin=P5)
 # Line(points[-1], origin, name='ding')
 
 
-print("--------------------------")
 print(R.output())
-print("--------------------------")
 printLocals(list(locals().items()))
 # print(vars(fourgon).keys())
